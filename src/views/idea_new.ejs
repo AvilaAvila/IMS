@@ -1,0 +1,46 @@
+<div class="card">
+  <div class="header">
+    <div>
+      <div style="font-size:18px;font-weight:800">Submit a new idea</div>
+      <div class="muted small">Add a title, description, and optional image attachment.</div>
+    </div>
+  </div>
+  <div class="body">
+    <form class="form" action="/ideas" method="post" enctype="multipart/form-data">
+      <div>
+        <label>Title</label>
+        <input id="title" type="text" name="title" placeholder="Short idea title" maxlength="120" required />
+        <div class="row" style="margin-top:10px; align-items:center; justify-content:space-between">
+          <span class="pill">Duplication: <strong data-dup-percent>0%</strong></span>
+          <span class="muted small" data-dup-hint>Type a title to check duplication.</span>
+        </div>
+      </div>
+      <div>
+        <label>Description</label>
+        <textarea id="description" name="description" placeholder="Describe the idea (what, why, impact). Minimum 10 characters." minlength="10" required></textarea>
+        <div class="row" style="margin-top:10px">
+          <button class="btn" type="button" data-enhance-desc title="Enhance using configured AI">Enhance</button>
+          <button class="btn" type="button" data-voice-desc title="Voice to text (browser)">Voice</button>
+          <button class="btn" type="button" data-pick-video title="Attach a video (optional)">Upload video</button>
+          <span class="pill" data-video-label>No video selected</span>
+        </div>
+        <div class="muted small" style="margin-top:6px">
+          Enhance uses <strong>AI_PROVIDER</strong> (default: Ollama local). Voice-to-text depends on your browser.
+        </div>
+      </div>
+      <div>
+        <label>Attachment (image)</label>
+        <input id="attachment" type="file" name="attachment" accept="image/png,image/jpeg,image/webp,image/gif" />
+        <div class="muted small">Optional. PNG/JPG/WEBP/GIF up to 50MB.</div>
+      </div>
+      <div style="display:none">
+        <input id="video" type="file" name="video" accept="video/mp4,video/webm,video/quicktime" />
+      </div>
+      <div class="row">
+        <button class="btn primary" type="submit" data-submit-idea>Post idea</button>
+        <a class="btn" href="/">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+

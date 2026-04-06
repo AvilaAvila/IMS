@@ -1,0 +1,97 @@
+<%
+  const defaultImg = "/public/default-idea.svg";
+%>
+
+<div class="card">
+  <div class="header">
+    <div>
+      <div style="font-size:18px;font-weight:750">Community ideas</div>
+      <div class="muted small">Browse what people submitted. Vote and comment to help prioritize.</div>
+    </div>
+    <div class="row">
+      <% if (user) { %>
+        <a class="btn primary" href="/ideas/new">Submit idea</a>
+        <a class="btn" href="/my-ideas">My Ideas</a>
+      <% } else { %>
+        <a class="btn primary" href="/auth">Sign in to submit</a>
+      <% } %>
+    </div>
+  </div>
+
+  <div class="body">
+    <% if (!ideas.length) { %>
+      <div class="muted">No ideas yet. Be the first to submit one.</div>
+    <% } %>
+
+    <div class="list">
+      <% ideas.forEach(idea => { %>
+        <div class="card" data-idea-card="<%= idea.id %>">
+          <div class="body">
+            <div class="grid">
+              <div>
+                <a href="/ideas/<%= idea.id %>">
+                  <img class="idea-img" src="<%= idea.attachmentPath || defaultImg %>" alt="Idea attachment preview" />
+                </a>
+              </div>
+              <div>
+                <div class="row" style="justify-content:space-between;align-items:flex-start">
+                  <div>
+                    <div style="font-size:18px;font-weight:800">
+                      <a href="/ideas/<%= idea.id %>"><%= idea.title %></a>
+                    </div>
+                    <div class="muted small">
+                      by <strong><%= idea.authorName %></strong> · <%= new Date(idea.createdAt).toLocaleString() %>
+                    </div>
+                  </div>
+                  <span class="badge <%= idea.status %>"><%= ideaStatusLabel(idea.status) %></span>
+                </div>
+
+                <div class="muted" style="margin-top:8px">
+                  <%= idea.description.length > 260 ? idea.description.slice(0, 260) + "…" : idea.description %>
+                </div>
+
+                <div class="row" style="margin-top:12px;align-items:center;justify-content:space-between">
+                  <div class="row">
+                    <span class="pill">Votes: <strong data-vote-count><%= idea.voteCount %></strong></span>
+                    <span class="pill">Comments: <strong data-comment-count><%= idea.commentCount %></strong></span>
+                  </div>
+                  <div class="row">
+                    <% if (user) { %>
+                      <button class="btn" type="button" data-toggle-comments>Comment</button>
+                      <button class="btn primary" type="button" data-vote-btn>Vote</button>
+                    <% } else { %>
+                      <a class="btn" href="/ideas/<%= idea.id %>#comments">Comment</a>
+                      <a class="btn primary" href="/auth">Sign in to vote</a>
+                    <% } %>
+                  </div>
+                </div>
+
+                <% if (user) { %>
+                  <div data-comments-panel style="display:none; margin-top:12px">
+                    <div class="card">
+                      <div class="body">
+                        <form class="form" data-comment-form>
+                          <div>
+                            <label class="small">Add a comment</label>
+                            <textarea class="input" data-comment-input placeholder="Write a comment..." minlength="2" required style="min-height:90px"></textarea>
+                          </div>
+                          <div class="row">
+                            <button class="btn primary" type="submit">Post</button>
+                            <button class="btn" type="button" data-toggle-comments>Close</button>
+                          </div>
+                        </form>
+                        <div style="height:10px"></div>
+                        <div data-comments-list class="list"></div>
+                      </div>
+                    </div>
+                  </div>
+                <% } %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</div>
+

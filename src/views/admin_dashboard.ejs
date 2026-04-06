@@ -1,0 +1,53 @@
+<div class="card">
+  <div class="header">
+    <div>
+      <div style="font-size:16px;font-weight:850">Admin · Dashboard</div>
+      <div class="muted small">Quick overview of usage and idea status.</div>
+    </div>
+    <div class="row">
+      <a class="btn" href="/admin/ideas">Manage ideas</a>
+    </div>
+  </div>
+  <div class="body">
+    <div class="grid" style="grid-template-columns: repeat(3, 1fr);">
+      <div class="card">
+        <div class="body">
+          <div class="muted small">Total users</div>
+          <div style="font-size:26px;font-weight:900"><%= stats.userCount %></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="body">
+          <div class="muted small">Total ideas</div>
+          <div style="font-size:26px;font-weight:900"><%= stats.ideaCount %></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="body">
+          <div class="muted small">In progress</div>
+          <div style="font-size:26px;font-weight:900"><%= stats.inprogressCount %></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="body">
+          <div class="muted small">Approved</div>
+          <div style="font-size:26px;font-weight:900"><%= stats.approvedCount %></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="body">
+          <div class="muted small">Closed</div>
+          <div style="font-size:26px;font-weight:900"><%= stats.closedCount %></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="body">
+          <div class="muted small">Need review</div>
+          <div class="muted small">Tip: sort ideas by votes on Achievers</div>
+          <a class="btn primary" style="margin-top:10px" href="/achievers">Open achievers</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,55 @@
+<div class="card">
+  <div class="header">
+    <div>
+      <div style="font-size:18px;font-weight:800">Sign in</div>
+      <div class="muted small">Create an account or log in to submit ideas, vote, and comment.</div>
+    </div>
+  </div>
+  <div class="body">
+    <div class="grid">
+      <div class="card">
+        <div class="header">
+          <div style="font-weight:800">Create account</div>
+        </div>
+        <div class="body">
+          <form class="form" action="/auth/signup" method="post">
+            <div>
+              <label>Name</label>
+              <input type="text" name="name" placeholder="Your name" required />
+            </div>
+            <div>
+              <label>Email</label>
+              <input type="email" name="email" placeholder="you@example.com" required />
+            </div>
+            <div>
+              <label>Password</label>
+              <input type="password" name="password" placeholder="Min 6 characters" minlength="6" required />
+            </div>
+            <button class="btn primary" type="submit">Create account</button>
+            <div class="muted small">The first account created becomes Admin (can set idea status).</div>
+          </form>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="header">
+          <div style="font-weight:800">Log in</div>
+        </div>
+        <div class="body">
+          <form class="form" action="/auth/signin" method="post">
+            <div>
+              <label>Email</label>
+              <input type="email" name="email" placeholder="you@example.com" required />
+            </div>
+            <div>
+              <label>Password</label>
+              <input type="password" name="password" required />
+            </div>
+            <button class="btn primary" type="submit">Sign in</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

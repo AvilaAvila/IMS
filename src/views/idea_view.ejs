@@ -1,0 +1,102 @@
+<%
+  const defaultImg = "/public/default-idea.svg";
+%>
+
+<div class="card">
+  <div class="header">
+    <div>
+      <div style="font-size:18px;font-weight:850"><%= idea.title %></div>
+      <div class="muted small">
+        by <strong><%= idea.authorName %></strong> · <%= new Date(idea.createdAt).toLocaleString() %>
+        · <span class="badge <%= idea.status %>"><%= ideaStatusLabel(idea.status) %></span>
+      </div>
+    </div>
+    <div class="row">
+      <a class="btn" href="/">Back</a>
+      <% if (user) { %>
+        <form action="/ideas/<%= idea.id %>/vote" method="post" style="display:inline">
+          <button class="btn primary" type="submit"><%= hasVoted ? 'Unvote' : 'Vote' %></button>
+        </form>
+      <% } else { %>
+        <a class="btn primary" href="/auth">Sign in to vote</a>
+      <% } %>
+    </div>
+  </div>
+
+  <div class="body">
+    <div class="grid">
+      <div>
+        <img class="idea-img" style="height:220px" src="<%= idea.attachmentPath || defaultImg %>" alt="Idea attachment preview" />
+        <div class="row" style="margin-top:10px">
+          <span class="pill">Votes: <strong><%= idea.voteCount %></strong></span>
+          <span class="pill">Status: <strong><%= ideaStatusLabel(idea.status) %></strong></span>
+        </div>
+        <% if (idea.videoPath) { %>
+          <div style="height:10px"></div>
+          <div class="card">
+            <div class="body">
+              <div style="font-weight:800; margin-bottom:8px">Attached video</div>
+              <video style="width:100%; border-radius:14px; border:1px solid rgba(255,255,255,.12); background: rgba(0,0,0,.2);" controls>
+                <source src="<%= idea.videoPath %>" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+        <% } %>
+      </div>
+      <div>
+        <div style="line-height:1.55; white-space: pre-wrap;"><%= idea.description %></div>
+        <% if (idea.status === 'closed' && idea.closeJustification) { %>
+          <div style="height:12px"></div>
+          <div class="card">
+            <div class="body">
+              <div style="font-weight:850">Close justification</div>
+              <div class="muted" style="margin-top:8px; white-space: pre-wrap;"><%= idea.closeJustification %></div>
+            </div>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="comments">
+  <div class="header">
+    <div>
+      <div style="font-size:16px;font-weight:800">Comments</div>
+      <div class="muted small">Discuss and refine the idea.</div>
+    </div>
+  </div>
+  <div class="body">
+    <% if (user) { %>
+      <form class="form" action="/ideas/<%= idea.id %>/comments" method="post">
+        <div>
+          <label>Add a comment</label>
+          <textarea name="content" placeholder="Write a thoughtful comment..." minlength="2" required></textarea>
+        </div>
+        <button class="btn primary" type="submit">Post comment</button>
+      </form>
+      <div style="height:12px"></div>
+    <% } else { %>
+      <div class="muted">Please <a href="/auth">sign in</a> to comment.</div>
+      <div style="height:12px"></div>
+    <% } %>
+
+    <% if (!comments.length) { %>
+      <div class="muted">No comments yet.</div>
+    <% } %>
+
+    <div class="list">
+      <% comments.forEach(c => { %>
+        <div class="comment">
+          <div class="row" style="justify-content:space-between;align-items:center">
+            <div><strong><%= c.authorName %></strong></div>
+            <div class="muted small"><%= new Date(c.createdAt).toLocaleString() %></div>
+          </div>
+          <div style="margin-top:8px; white-space: pre-wrap;"><%= c.content %></div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</div>
+

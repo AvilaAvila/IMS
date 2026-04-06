@@ -1,0 +1,36 @@
+<div class="card">
+  <div class="header">
+    <div>
+      <div style="font-size:18px;font-weight:850">Profile</div>
+      <div class="muted small">Your account details.</div>
+    </div>
+  </div>
+  <div class="body">
+    <div class="card">
+      <div class="body">
+        <div class="row" style="justify-content:space-between;align-items:center">
+          <div>
+            <div><strong>Name</strong></div>
+            <div class="muted"><%= user.name %></div>
+          </div>
+          <div class="right">
+            <div><strong>Email</strong></div>
+            <div class="muted"><%= user.email %></div>
+          </div>
+        </div>
+        <div style="height:10px"></div>
+        <div class="row" style="justify-content:space-between;align-items:center">
+          <div>
+            <div><strong>Role</strong></div>
+            <div class="muted"><%= user.role %></div>
+          </div>
+          <div class="right">
+            <div><strong>Created</strong></div>
+            <div class="muted"><%= new Date(user.createdAt).toLocaleString() %></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

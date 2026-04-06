@@ -1,0 +1,37 @@
+<div class="card">
+  <div class="header">
+    <div>
+      <div style="font-size:18px;font-weight:850">Inbox notifications</div>
+      <div class="muted small">Votes, comments, and status updates for your ideas.</div>
+    </div>
+    <div class="row">
+      <form action="/inbox/mark-read" method="post" style="display:inline">
+        <button class="btn" type="submit">Mark all as read</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="body">
+    <% if (!notifications.length) { %>
+      <div class="muted">No notifications yet.</div>
+    <% } %>
+    <div class="list">
+      <% notifications.forEach(n => { %>
+        <div class="comment" style="<%= n.isRead ? 'opacity:.75' : '' %>">
+          <div class="row" style="justify-content:space-between;align-items:center">
+            <div>
+              <strong><%= n.type.toUpperCase() %></strong>
+              <span class="muted small">· <%= new Date(n.createdAt).toLocaleString() %></span>
+            </div>
+            <% if (!n.isRead) { %><span class="badge inprogress">New</span><% } %>
+          </div>
+          <div style="margin-top:8px"><%= n.message %></div>
+          <% if (n.link) { %>
+            <div style="margin-top:8px"><a class="btn" href="<%= n.link %>">Open</a></div>
+          <% } %>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</div>
+

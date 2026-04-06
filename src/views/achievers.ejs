@@ -1,0 +1,59 @@
+<div class="card">
+  <div class="header">
+    <div>
+      <div style="font-size:18px;font-weight:850">Achievers</div>
+      <div class="muted small">Top ideas (by votes) and top contributors.</div>
+    </div>
+  </div>
+  <div class="body">
+    <div class="grid">
+      <div class="card">
+        <div class="header">
+          <div style="font-weight:850">Top ideas</div>
+        </div>
+        <div class="body">
+          <% if (!topIdeas.length) { %>
+            <div class="muted">No ideas yet.</div>
+          <% } %>
+          <div class="list">
+            <% topIdeas.forEach((idea, idx) => { %>
+              <div class="comment">
+                <div class="row" style="justify-content:space-between;align-items:center">
+                  <div>
+                    <strong>#<%= idx + 1 %></strong>
+                    <a href="/ideas/<%= idea.id %>"><%= idea.title %></a>
+                  </div>
+                  <span class="pill">Votes: <strong><%= idea.voteCount %></strong></span>
+                </div>
+                <div class="muted small">by <strong><%= idea.authorName %></strong> · <span class="badge <%= idea.status %>"><%= ideaStatusLabel(idea.status) %></span></div>
+              </div>
+            <% }) %>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="header">
+          <div style="font-weight:850">Top contributors</div>
+        </div>
+        <div class="body">
+          <% if (!topUsers.length) { %>
+            <div class="muted">No users yet.</div>
+          <% } %>
+          <div class="list">
+            <% topUsers.forEach((u, idx) => { %>
+              <div class="comment">
+                <div class="row" style="justify-content:space-between;align-items:center">
+                  <div><strong>#<%= idx + 1 %></strong> <%= u.name %></div>
+                  <span class="pill">Received votes: <strong><%= u.receivedVotes %></strong></span>
+                </div>
+                <div class="muted small">Ideas submitted: <strong><%= u.ideaCount %></strong></div>
+              </div>
+            <% }) %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

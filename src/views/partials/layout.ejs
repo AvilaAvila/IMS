@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><%= title %> · IMS Ideas</title>
+    <link rel="stylesheet" href="/public/styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <a class="brand" href="/">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <div class="title">IMS Ideas</div>
+            <div class="subtitle">Capture, vote, improve</div>
+          </div>
+        </a>
+
+        <nav class="nav" aria-label="Primary">
+          <a href="/" class="<%= path === '/' ? 'active' : '' %>">Home</a>
+          <a href="/about" class="<%= path === '/about' ? 'active' : '' %>">About the application</a>
+          <a href="/help" class="<%= path === '/help' ? 'active' : '' %>">Help & FAQ</a>
+          <a href="/achievers" class="<%= path === '/achievers' ? 'active' : '' %>">Achievers</a>
+          <% if (user) { %>
+            <a href="/my-ideas" class="<%= path === '/my-ideas' ? 'active' : '' %>">My Ideas</a>
+            <a href="/ideas/new" class="<%= path === '/ideas/new' ? 'active' : '' %>">Submit idea</a>
+            <% if (user.role === 'admin') { %>
+              <a href="/admin/ideas" class="<%= path.startsWith('/admin') ? 'active' : '' %>">Admin</a>
+            <% } %>
+          <% } %>
+        </nav>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div class="left">
+            <span class="pill">Idea management system</span>
+            <% if (user) { %>
+              <span class="pill">Signed in as <strong><%= user.name %></strong></span>
+            <% } else { %>
+              <span class="pill">Sign in to submit & vote</span>
+            <% } %>
+          </div>
+
+          <div class="actions">
+            <% if (user) { %>
+              <a class="btn" href="/inbox">Inbox</a>
+              <a class="btn" href="/profile">Profile</a>
+              <form action="/auth/signout" method="post" style="display:inline">
+                <button class="btn danger" type="submit">Sign out</button>
+              </form>
+            <% } else { %>
+              <a class="btn primary" href="/auth">Sign in</a>
+            <% } %>
+          </div>
+        </header>
+
+        <% if (flash) { %>
+          <div class="container">
+            <div class="flash <%= flash.type %>"><%= flash.message %></div>
+          </div>
+        <% } %>
+
+        <div class="container">
+          <%- body %>
+        </div>
+      </main>
+    </div>
+    <script src="/public/app.js"></script>
+  </body>
+</html>
+

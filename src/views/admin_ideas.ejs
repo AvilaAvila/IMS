@@ -1,0 +1,48 @@
+<div class="card">
+  <div class="header">
+    <div>
+      <div style="font-size:18px;font-weight:850">Admin · Manage idea status</div>
+      <div class="muted small">Update status to Approved / In progress / Closed.</div>
+    </div>
+    <div class="row">
+      <a class="btn" href="/admin/dashboard">Dashboard</a>
+    </div>
+  </div>
+  <div class="body">
+    <% if (!ideas.length) { %>
+      <div class="muted">No ideas yet.</div>
+    <% } %>
+    <div class="list">
+      <% ideas.forEach(idea => { %>
+        <div class="comment">
+          <div class="row" style="justify-content:space-between;align-items:flex-start">
+            <div>
+              <div style="font-weight:850">
+                <a href="/ideas/<%= idea.id %>"><%= idea.title %></a>
+              </div>
+              <div class="muted small">by <strong><%= idea.authorName %></strong> · <%= new Date(idea.createdAt).toLocaleString() %></div>
+            </div>
+            <span class="badge <%= idea.status %>"><%= ideaStatusLabel(idea.status) %></span>
+          </div>
+          <div style="margin-top:10px">
+            <form class="row" action="/admin/ideas/<%= idea.id %>/status" method="post">
+              <select name="status" aria-label="Status">
+                <option value="approved" <%= idea.status === 'approved' ? 'selected' : '' %>>Approved</option>
+                <option value="inprogress" <%= idea.status === 'inprogress' ? 'selected' : '' %>>In progress</option>
+                <option value="closed" <%= idea.status === 'closed' ? 'selected' : '' %>>Closed</option>
+              </select>
+              <input type="text" name="closeJustification" placeholder="Close justification (required when closing)" style="min-width:320px" />
+              <button class="btn primary" type="submit">Update</button>
+            </form>
+            <% if (idea.status === 'closed' && idea.closeJustification) { %>
+              <div class="muted small" style="margin-top:8px">
+                <strong>Justification:</strong> <%= idea.closeJustification %>
+              </div>
+            <% } %>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,58 @@
+<%
+  const defaultImg = "/public/default-idea.svg";
+%>
+
+<div class="card">
+  <div class="header">
+    <div>
+      <div style="font-size:18px;font-weight:850">My submitted ideas</div>
+      <div class="muted small">Track your ideas and their current status.</div>
+    </div>
+    <div class="row">
+      <a class="btn primary" href="/ideas/new">Submit new</a>
+    </div>
+  </div>
+
+  <div class="body">
+    <% if (!ideas.length) { %>
+      <div class="muted">You haven’t submitted any ideas yet.</div>
+    <% } %>
+
+    <div class="list">
+      <% ideas.forEach(idea => { %>
+        <div class="card">
+          <div class="body">
+            <div class="grid">
+              <div>
+                <img class="idea-img" src="<%= idea.attachmentPath || defaultImg %>" alt="Idea attachment preview" />
+              </div>
+              <div>
+                <div class="row" style="justify-content:space-between;align-items:flex-start">
+                  <div>
+                    <div style="font-size:18px;font-weight:850">
+                      <a href="/ideas/<%= idea.id %>"><%= idea.title %></a>
+                    </div>
+                    <div class="muted small">
+                      Submitted <%= new Date(idea.createdAt).toLocaleString() %>
+                    </div>
+                  </div>
+                  <span class="badge <%= idea.status %>"><%= ideaStatusLabel(idea.status) %></span>
+                </div>
+
+                <div class="row" style="margin-top:10px">
+                  <span class="pill">Votes: <strong><%= idea.voteCount %></strong></span>
+                  <span class="pill">Comments: <strong><%= idea.commentCount %></strong></span>
+                </div>
+
+                <div class="row" style="margin-top:12px">
+                  <a class="btn" href="/ideas/<%= idea.id %>">Open</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</div>
+
