@@ -53,6 +53,8 @@ app.use(helmet({ contentSecurityPolicy: false }));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+
+app.set("trust proxy", 1);
 app.use(
   session({
     store: new pgSession({
@@ -60,12 +62,29 @@ app.use(
       tableName: "session",
       createTableIfMissing: true,
     }),
-    secret: process.env.SESSION_SECRET || "dev-secret-change-me",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { sameSite: "lax" },
+    cookie: {
+      sameSite: "lax",
+      secure: true, // 🔥 important for Render (HTTPS)
+    },
   })
 );
+
+// app.use(
+//   session({
+//     store: new pgSession({
+//       pool,
+//       tableName: "session",
+//       createTableIfMissing: true,
+//     }),
+//     secret: process.env.SESSION_SECRET || "dev-secret-change-me",
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: { sameSite: "lax" },
+//   })
+// );
 
 app.use("/public", express.static(path.join(__dirname, "public")));
 
