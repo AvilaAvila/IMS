@@ -55,6 +55,7 @@ app.use(express.json());
 
 
 app.set("trust proxy", 1);
+
 app.use(
   session({
     store: new pgSession({
@@ -62,12 +63,14 @@ app.use(
       tableName: "session",
       createTableIfMissing: true,
     }),
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET || "dev-secret-change-me",
     resave: false,
     saveUninitialized: false,
+    proxy: true, // 🔥 IMPORTANT for Render
     cookie: {
-      sameSite: "lax",
-      secure: true, // 🔥 important for Render (HTTPS)
+      sameSite: "none", // 🔥 critical fix
+      secure: true,     // required for HTTPS
+      httpOnly: true,
     },
   })
 );
